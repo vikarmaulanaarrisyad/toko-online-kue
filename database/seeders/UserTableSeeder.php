@@ -19,7 +19,7 @@ class UserTableSeeder extends Seeder
         $admin = new User;
         $admin->name = 'Administrator';
         $admin->email = 'admin@gmail.com';
-        $admin->password = '$2y$10$Em9.WL.miABER9M0Ku2Puei7dm1/B2Lo6CPjIIM3AGz3So0N/Ziw.'; //000000
+        $admin->password = bcrypt('admin'); //000000
         $admin->path_image = 'default.jpg';
         $admin->remember_token = Str::random(10);
         $admin->email_verified_at = Date('Y-m-d H:i:s');
