@@ -246,7 +246,11 @@
 
     @stack('scripts')
 
-
+    <script>
+        $(function() {
+            $('#spinner-border').hide();
+        });
+    </script>
 </body>
 
 </html>

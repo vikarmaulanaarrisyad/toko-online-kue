@@ -38,15 +38,10 @@
                      </a>
                  </li>
 
-                 {{-- @if (auth()->user()->hasRole('admin'))
-                     <li class="nav-header">MASTER DATA</li>
-                 @else
-                     <li class="nav-header">MANAJEMEN DATA</li>
-                 @endif --}}
-
                  @if (Auth()->user()->hasRole('admin'))
                      <li class="nav-item">
-                         <a href="" class="nav-link {{ request()->is('kelas*') ? 'active' : '' }}">
+                         <a href="{{ route('kategori.index') }}"
+                             class="nav-link {{ request()->is('kategori*') ? 'active' : '' }}">
                              <i class="nav-icon fas fa-list-alt"></i>
                              <p>
                                  Kategori Produk
