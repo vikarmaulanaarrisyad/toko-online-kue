@@ -28,7 +28,10 @@ function resetForm(selector) {
         $(selector).find(".custom-file-label").text("Choose file");
     }
 
+    $(selector).find(".custom-file-label").text("Choose file");
+
     $(".select2").trigger("change");
+
     $(
         ".form-control, .custom-select, [type=radio], [type=checkbox], [type=file], .select2, .note-editor"
     ).removeClass("is-invalid");

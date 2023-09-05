@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Kategori')
+@section('title', 'Satuan')
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Kategori produk</li>
+    <li class="breadcrumb-item active">Satuan produk</li>
 @endsection
 
 @section('content')
@@ -12,14 +12,14 @@
         <div class="col-lg-12 col-md-12 col-12">
             <x-card>
                 <x-slot name="header">
-                    <button onclick="addForm(`{{ route('kategori.store') }}`)" class="btn btn-outline-primary btn-sm"><i
+                    <button onclick="addForm(`{{ route('satuan.store') }}`)" class="btn btn-outline-primary btn-sm"><i
                             class="fas fa-plus-circle"></i> Tambah Data</button>
                 </x-slot>
                 <x-table class="table-bordered">
                     <x-slot name="thead">
                         <tr>
                             <th>No</th>
-                            <th>Kategori</th>
+                            <th>Satuan</th>
                             <th>Aksi</th>
                         </tr>
                     </x-slot>
@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    @includeIf('admin.kategori.form')
+    @includeIf('admin.satuan.form')
 @endsection
 
 @includeIf('includes.datatables')
@@ -45,7 +45,7 @@
             serverSide: true,
             autoWidth: false,
             ajax: {
-                url: '{{ route('kategori.data') }}'
+                url: '{{ route('satuan.data') }}'
             },
             columns: [{
                     data: 'DT_RowIndex',
@@ -65,7 +65,7 @@
             ]
         });
 
-        function addForm(url, name = "Tambah Data Kategori") {
+        function addForm(url, name = "Tambah Data Satuan") {
             $(modal).modal('show');
             $(`${modal} .modal-title`).text(name);
             $(`${modal} form`).attr('action', url);
@@ -75,7 +75,7 @@
             resetForm(`${modal} form`);
         }
 
-        function editForm(url, title = 'Edit Data Kategori') {
+        function editForm(url, title = 'Edit Data Satuan') {
             $.get(url)
                 .done(response => {
                     $(modal).modal('show');

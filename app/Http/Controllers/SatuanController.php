@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kategori;
+use App\Models\Satuan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class KategoriController extends Controller
+class SatuanController extends Controller
 {
-
     public function data(Request $request)
     {
-        $query = Kategori::latest()->get();
+        $query = Satuan::latest()->get();
 
         return datatables($query)
             ->addIndexColumn()
             ->addColumn('aksi', function ($query) {
                 return '
                     <div class="btn-group">
-                        <button onclick="editForm(`' . route('kategori.show', $query->id) . '`)" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</button>
-                        <button onclick="deleteData(`' . route('kategori.destroy', $query->id) . '`, `' . $query->name . '`)" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                        <button onclick="editForm(`' . route('satuan.show', $query->id) . '`)" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</button>
+                        <button onclick="deleteData(`' . route('satuan.destroy', $query->id) . '`, `' . $query->name . '`)" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
                     </div>
                 ';
             })
@@ -33,7 +32,7 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        return view('admin.kategori.index');
+        return view('admin.satuan.index');
     }
 
     /**
@@ -50,12 +49,11 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|min:1'
+            'name' => 'required',
         ];
 
         $message = [
-            'name.required' => 'Kategori wajib diisi',
-            'name.min' => 'Kategori minimal 1 karakter'
+            'name.required' => 'Satuan wajib diisi.'
         ];
 
         $validator = Validator::make($request->all(), $rules, $message);
@@ -69,7 +67,7 @@ class KategoriController extends Controller
             'slug' => trim(Str::slug($request->name)),
         ];
 
-        Kategori::create($data);
+        Satuan::create($data);
 
         return response()->json(['message' => 'Data berhasil disimpan.']);
     }
@@ -77,15 +75,15 @@ class KategoriController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Kategori $kategori)
+    public function show(Satuan $satuan)
     {
-        return response()->json(['data' => $kategori]);
+        return response()->json(['data' => $satuan]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kategori $kategori)
+    public function edit(Satuan $satuan)
     {
         //
     }
@@ -93,15 +91,14 @@ class KategoriController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kategori $kategori)
+    public function update(Request $request, Satuan $satuan)
     {
         $rules = [
-            'name' => 'required|min:1',
+            'name' => 'required',
         ];
 
         $message = [
-            'name.required' => 'Kategori wajib diisi',
-            'name.min' => 'Kategori minimal 1 karakter'
+            'name.required' => 'Satuan wajib diisi.'
         ];
 
         $validator = Validator::make($request->all(), $rules, $message);
@@ -115,7 +112,7 @@ class KategoriController extends Controller
             'slug' => trim(Str::slug($request->name)),
         ];
 
-        $kategori->update($data);
+        $satuan->update($data);
 
         return response()->json(['message' => 'Data berhasil disimpan.']);
     }
@@ -123,9 +120,9 @@ class KategoriController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kategori $kategori)
+    public function destroy(Satuan $satuan)
     {
-        $kategori->delete();
+        $satuan->delete();
 
         return response()->json(['message' => 'Data berhasil dihapus.']);
     }
@@ -134,7 +131,7 @@ class KategoriController extends Controller
     {
         $keyword = $request->get('q');
 
-        $result = Kategori::where("name", "LIKE", "%$keyword%")->get();
+        $result = Satuan::where("name", "LIKE", "%$keyword%")->get();
 
         return $result;
     }

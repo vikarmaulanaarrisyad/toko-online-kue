@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Kategori')
+@section('title', 'Produk')
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Kategori produk</li>
+    <li class="breadcrumb-item active">Daftar produk</li>
 @endsection
 
 @section('content')
@@ -12,15 +12,18 @@
         <div class="col-lg-12 col-md-12 col-12">
             <x-card>
                 <x-slot name="header">
-                    <button onclick="addForm(`{{ route('kategori.store') }}`)" class="btn btn-outline-primary btn-sm"><i
+                    <button onclick="addForm(`{{ route('produk.store') }}`)" class="btn btn-outline-primary btn-sm"><i
                             class="fas fa-plus-circle"></i> Tambah Data</button>
                 </x-slot>
                 <x-table class="table-bordered">
                     <x-slot name="thead">
                         <tr>
-                            <th>No</th>
-                            <th>Kategori</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No</th>
+                            <th class="text-center">Nama Produk</th>
+                            <th class="text-center">Harga</th>
+                            <th class="text-center">Stok</th>
+                            <th class="text-center">Satuan</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </x-slot>
                 </x-table>
@@ -28,9 +31,10 @@
         </div>
     </div>
 
-    @includeIf('admin.kategori.form')
+    @includeIf('admin.produk.form')
 @endsection
 
+@includeIf('includes.select2')
 @includeIf('includes.datatables')
 
 @push('scripts')
@@ -45,18 +49,28 @@
             serverSide: true,
             autoWidth: false,
             ajax: {
-                url: '{{ route('kategori.data') }}'
+                url: '{{ route('produk.data') }}'
             },
             columns: [{
                     data: 'DT_RowIndex',
                     searchable: false,
                     sortable: false
                 },
-
                 {
                     data: 'name'
                 },
-
+                {
+                    data: 'price',
+                    className: 'text-right'
+                },
+                {
+                    data: 'stock',
+                    className: 'text-center'
+                },
+                {
+                    data: 'satuan',
+                    className: 'text-center'
+                },
                 {
                     data: 'aksi',
                     sortable: false,
@@ -65,7 +79,7 @@
             ]
         });
 
-        function addForm(url, name = "Tambah Data Kategori") {
+        function addForm(url, name = "Tambah Daftar Produk") {
             $(modal).modal('show');
             $(`${modal} .modal-title`).text(name);
             $(`${modal} form`).attr('action', url);
@@ -73,9 +87,11 @@
             $('#spinner-border').hide();
             $(button).prop('disabled', false);
             resetForm(`${modal} form`);
+            $('#categories').val([]).trigger('change');
+            $('#unit').val([]).trigger('change');
         }
 
-        function editForm(url, title = 'Edit Data Kategori') {
+        function editForm(url, title = 'Edit Data Produk') {
             $.get(url)
                 .done(response => {
                     $(modal).modal('show');
@@ -85,7 +101,21 @@
                     $('#spinner-border').hide();
                     $(button).prop('disabled', false);
                     resetForm(`${modal} form`);
+
+                    let unit = response.data.satuan;
+
+                    // Clear existing options in the Select2 dropdown
+                    $('#categories').empty();
+
+                    response.data.categories.forEach(function(category) {
+                        var option = new Option(category.name, category.id, true, true);
+                        $('#categories').append(option).trigger('change');
+                    });
+                    // Clear and update the Select2 dropdown with the single unit
+                    $('#unit').empty().append(new Option(unit.name, unit.id, true, true)).trigger('change');
+
                     loopForm(response.data);
+
                 })
                 .fail(errors => {
                     Swal.fire({
@@ -192,5 +222,49 @@
                 }
             })
         }
+
+
+
+        //Select2 Kategori
+        $('#categories').select2({
+            placeholder: "Pilih kategori",
+            allowClear: true,
+            closeOnSelect: true,
+            theme: 'bootstrap4',
+            ajax: {
+                url: '{{ route('kategori.search') }}',
+                processResults: function(data) {
+                    return {
+                        results: data.map(function(item) {
+                            return {
+                                id: item.id,
+                                text: item.name
+                            }
+                        })
+                    }
+                }
+            }
+        });
+
+        //Select2 unit
+        $('#unit').select2({
+            placeholder: "Pilih satuan",
+            allowClear: true,
+            closeOnSelect: true,
+            theme: 'bootstrap4',
+            ajax: {
+                url: '{{ route('satuan.search') }}',
+                processResults: function(data) {
+                    return {
+                        results: data.map(function(item) {
+                            return {
+                                id: item.id,
+                                text: item.name
+                            }
+                        })
+                    }
+                }
+            }
+        });
     </script>
 @endpush

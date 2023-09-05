@@ -40,24 +40,26 @@
 
                  @if (Auth()->user()->hasRole('admin'))
                      <li class="nav-item">
+                         <a href="{{ route('satuan.index') }}"
+                             class="nav-link {{ request()->is('satuan*') ? 'active' : '' }}">
+                             <i class="nav-icon fas fa-list-alt"></i>
+                             <p>
+                                 Satuan Produk
+                             </p>
+                         </a>
+                     </li>
+                     <li class="nav-item">
                          <a href="{{ route('kategori.index') }}"
                              class="nav-link {{ request()->is('kategori*') ? 'active' : '' }}">
-                             <i class="nav-icon fas fa-list-alt"></i>
+                             <i class="nav-icon fas fa-tags"></i>
                              <p>
                                  Kategori Produk
                              </p>
                          </a>
                      </li>
                      <li class="nav-item">
-                         <a href="" class="nav-link {{ request()->is('kelas*') ? 'active' : '' }}">
-                             <i class="nav-icon fas fa-tags"></i>
-                             <p>
-                                 Tag Produk
-                             </p>
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a href="" class="nav-link {{ request()->is('matakuliah*') ? 'active' : '' }}">
+                         <a href="{{ route('produk.index') }}"
+                             class="nav-link {{ request()->is('produk*') ? 'active' : '' }}">
                              <i class="nav-icon fas fa-cube"></i>
                              <p>
                                  Produk
