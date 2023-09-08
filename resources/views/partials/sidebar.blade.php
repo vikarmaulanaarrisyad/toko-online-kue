@@ -66,15 +66,6 @@
                              </p>
                          </a>
                      </li>
-                     <li class="nav-item">
-                         <a href="" class="nav-link {{ request()->is('mahasiswa*') ? 'active' : '' }}">
-                             <i class="nav-icon fas fa-cube"></i>
-                             <p>
-                                 Gambar Produk
-                             </p>
-                         </a>
-                     </li>
-
                      <li class="nav-header">TRANSAKSI</li>
                      <li class="nav-item">
                          <a href="" class="nav-link {{ request()->is('dosen*') ? 'active' : '' }}">

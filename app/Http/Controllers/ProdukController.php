@@ -17,6 +17,13 @@ class ProdukController extends Controller
 
         return datatables($query)
             ->addIndexColumn()
+            ->addColumn('product_image', function ($query) {
+                return '
+                <div class="img-hover-zoom">
+                    <img id="product_image" src="' . Storage::url($query->product_image) . '" alt="image-product" class="img-thumbnail" style="width: 100px; hight: 80px;">
+                </div>
+                ';
+            })
             ->addColumn('satuan', function ($query) {
                 return $query->satuan->name;
             })

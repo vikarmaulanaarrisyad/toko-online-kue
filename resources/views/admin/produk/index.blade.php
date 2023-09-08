@@ -7,6 +7,27 @@
     <li class="breadcrumb-item active">Daftar produk</li>
 @endsection
 
+@push('css')
+    <style>
+        /* [1] The container */
+        .img-hover-zoom {
+            /* [1.1] Set it as per your need */
+            overflow: hidden;
+            /* [1.2] Hide the overflowing of child elements */
+        }
+
+        /* [2] Transition property for smooth transformation of images */
+        .img-hover-zoom img {
+            transition: transform .5s ease;
+        }
+
+        /* [3] Finally, transforming the image when container gets hovered */
+        .img-hover-zoom:hover img {
+            transform: scale(1.5);
+        }
+    </style>
+@endpush
+
 @section('content')
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12">
@@ -18,7 +39,8 @@
                 <x-table class="table-bordered">
                     <x-slot name="thead">
                         <tr>
-                            <th class="text-center">No</th>
+                            <th style="width: 5%;" class="text-center">No</th>
+                            <th style="width: 300px;" class="text-center">Gambar Produk</th>
                             <th class="text-center">Nama Produk</th>
                             <th class="text-center">Harga</th>
                             <th class="text-center">Stok</th>
@@ -54,7 +76,14 @@
             columns: [{
                     data: 'DT_RowIndex',
                     searchable: false,
-                    sortable: false
+                    sortable: false,
+                    className: 'text-center'
+                },
+                {
+                    data: 'product_image',
+                    searchable: false,
+                    sortable: false,
+                    className: 'text-center'
                 },
                 {
                     data: 'name'

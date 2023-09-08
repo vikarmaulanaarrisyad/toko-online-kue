@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\{
     DashboardController,
+    FrontController,
     KategoriController,
     ProdukController,
     SatuanController
@@ -19,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/', [FrontController::class, 'index']);
 
 Route::group([
     'middleware' => ['auth', 'role:admin,pembeli'],
